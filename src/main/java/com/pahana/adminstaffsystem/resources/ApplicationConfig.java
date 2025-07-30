@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.pahana.adminstaffsystem.resources;
 
 import com.pahana.adminstaffsystem.api.AdminAPI;
@@ -12,10 +8,7 @@ import java.util.Set;
 import com.pahana.adminstaffsystem.api.StaffAPI;
 
 
-/**
- *
- * @author musharraf
- */
+
 
 @ApplicationPath("/api") // All endpoints start with /api
 

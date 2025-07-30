@@ -18,7 +18,7 @@ public class AdminDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
-            stmt.setString(2, password); // In real apps, compare hashed password
+            stmt.setString(2, password); 
 
             ResultSet rs = stmt.executeQuery();
 
