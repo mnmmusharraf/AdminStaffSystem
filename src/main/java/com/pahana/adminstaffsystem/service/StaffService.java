@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.pahana.adminstaffsystem.service;
 
 import com.pahana.adminstaffsystem.dao.StaffDAO;
@@ -9,10 +5,7 @@ import com.pahana.adminstaffsystem.model.Staff;
 
 import java.util.List;
 
-/**
- *
- * @author musharraf
- */
+
 public class StaffService {
 
     private final StaffDAO staffDAO;
