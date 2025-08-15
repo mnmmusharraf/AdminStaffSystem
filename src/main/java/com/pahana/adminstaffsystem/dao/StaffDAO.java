@@ -38,6 +38,7 @@ public class StaffDAO {
 
     //Method to add a staff member 
     public boolean addStaff(Staff staff) {
+        if(staff == null) return false;
         String query = "INSERT INTO staff (username, email, password) VALUES (?,?,?)";
 
         try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -73,6 +74,7 @@ public class StaffDAO {
     }
 
     public boolean updateStaff(Staff staff, int staffId) {
+        if(staff == null) return false;
         String query = "UPDATE staff SET username = ?, email = ?, password = ? WHERE staff_id = ?";
         try (
                 Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
