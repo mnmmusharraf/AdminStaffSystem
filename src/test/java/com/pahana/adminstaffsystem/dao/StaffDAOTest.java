@@ -25,7 +25,8 @@ public class StaffDAOTest {
 
     @BeforeEach
     public void setUp() {
-        createdStaffId = null;
+        dao = new StaffDAO();
+        //createdStaffId = null;
     }
 
     @AfterEach

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.pahana.adminstaffsystem.dao.AdminDAOTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.724 s -- in com.pahana.adminstaffsystem.dao.AdminDAOTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.633 s -- in com.pahana.adminstaffsystem.dao.AdminDAOTest
