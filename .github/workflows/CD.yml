@@ -1,54 +1,29 @@
-name: Backend CD
+name: Local CD to GlassFish
 
 on:
-  workflow_run:
-    workflows: ["Backend CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - master  
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: self-hosted
+    runs-on: self-hosted  
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build project
+      - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Deploy to GlassFish
-        env:
-          GLASSFISH_ADMIN_USER: admin
-          GLASSFISH_ADMIN_PASSWORD: ${{ secrets.GLASSFISH_ADMIN_PASSWORD }}
-          GLASSFISH_HOME: /home/musharraf/GlassFish_Server
-          WAR_NAME: AdminStaffSystem
+      - name: Copy WAR to GlassFish autodeploy folder
         run: |
-          echo "AS_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD}" > password.txt
-
-          # Start domain only if not running
-          DOMAIN_STATUS=$($GLASSFISH_HOME/bin/asadmin list-domains | grep "domain1")
-          if [[ $DOMAIN_STATUS == *"running"* ]]; then
-              echo "Domain already running"
-          else
-              echo "Starting domain..."
-              $GLASSFISH_HOME/bin/asadmin start-domain
-          fi
-
-          # Undeploy old WAR if exists
-          $GLASSFISH_HOME/bin/asadmin --user $GLASSFISH_ADMIN_USER --passwordfile password.txt undeploy $WAR_NAME.war || true
-
-          # Deploy new WAR
-          set -e
-          echo "Deploying WAR..."
-          $GLASSFISH_HOME/bin/asadmin --user $GLASSFISH_ADMIN_USER --passwordfile password.txt deploy target/$WAR_NAME.war
-
-          # Print last 20 lines of server log for verification
-          tail -n 20 $GLASSFISH_HOME/glassfish/domains/domain1/logs/server.log
+          WAR_FILE=$(ls target/*.war | head -n 1)
+          echo "Deploying $WAR_FILE to GlassFish autodeploy..."
+          cp "$WAR_FILE" /home/musharraf/GlassFish_Server/glassfish/domains/domain1/autodeploy/
