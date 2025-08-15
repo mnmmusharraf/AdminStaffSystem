@@ -13,19 +13,17 @@ public class AdminDAOTest {
     @BeforeAll
     public void setUpClass() {
         dao = new AdminDAO();
-        // Optionally: Insert test admin user to DB if you control the test DB
-        // For example: INSERT INTO admin (username, password) VALUES ('admin', 'admin123')
+        
     }
 
     @AfterAll
     public void tearDownClass() {
-        // Optionally: Clean up test admin user from DB
-        // For example: DELETE FROM admin WHERE username='admin'
+        
     }
 
     @BeforeEach
     public void setUp() {
-        // No setup needed for each test in this case
+         dao = new AdminDAO();
     }
 
     @AfterEach
@@ -35,7 +33,6 @@ public class AdminDAOTest {
 
     @Test
     public void testValidateLogin_withValidCredentials() {
-        // Make sure 'admin' with password 'admin123' exists in your test DB
         boolean result = dao.validateLogin("admin", "admin123");
         assertTrue(result, "Login should succeed with valid credentials");
     }
