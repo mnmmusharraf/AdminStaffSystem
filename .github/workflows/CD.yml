@@ -32,9 +32,23 @@ jobs:
           WAR_NAME: AdminStaffSystem
         run: |
           echo "AS_ADMIN_PASSWORD=${GLASSFISH_ADMIN_PASSWORD}" > password.txt
-          $GLASSFISH_HOME/bin/asadmin start-domain
+
+          # Start domain only if not running
+          DOMAIN_STATUS=$($GLASSFISH_HOME/bin/asadmin list-domains | grep "domain1")
+          if [[ $DOMAIN_STATUS == *"running"* ]]; then
+              echo "Domain already running"
+          else
+              echo "Starting domain..."
+              $GLASSFISH_HOME/bin/asadmin start-domain
+          fi
+
           # Undeploy old WAR if exists
           $GLASSFISH_HOME/bin/asadmin --user $GLASSFISH_ADMIN_USER --passwordfile password.txt undeploy $WAR_NAME.war || true
+
           # Deploy new WAR
+          set -e
+          echo "Deploying WAR..."
           $GLASSFISH_HOME/bin/asadmin --user $GLASSFISH_ADMIN_USER --passwordfile password.txt deploy target/$WAR_NAME.war
-          $GLASSFISH_HOME/bin/asadmin stop-domain
+
+          # Print last 20 lines of server log for verification
+          tail -n 20 $GLASSFISH_HOME/glassfish/domains/domain1/logs/server.log
